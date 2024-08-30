@@ -4,9 +4,8 @@ UPSTREAM_PATH="${1}"
 CACHED_PATH="${2}"
 
 echo "Comparing Files:"
-# Use -Z to ignore trailing whitespace
-# to catch newline mismatches at end of file too
-diff -Z $UPSTREAM_PATH $CACHED_PATH > diff_text
+# Ignore whitespace changes to reduce the number of false positives
+diff -EZbB $UPSTREAM_PATH $CACHED_PATH > diff_text
 if [ $? -eq 0 ]; then
     echo "    upstream: $UPSTREAM_PATH"
     echo "    cached:   $CACHED_PATH"
